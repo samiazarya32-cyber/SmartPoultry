@@ -83,7 +83,18 @@
 
     .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #334155; border-radius: 4px; }
-    
+
+    // Start Phone/Device Camera
+async function startLiveCamera() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+    const video = document.getElementById('cameraVideo');
+    video.srcObject = stream;
+    video.play();
+  } catch (err) {
+    alert("ካሜራ ክኽፈት ኣይከኣለን! ፍቓድ ምሃብካ ኣረጋግጽ።");
+  }
+}
     /* Audio Equalizer Bars Animation */
     .eq-bar { animation: bounceEq 1.2s infinite ease-in-out alternate; }
     .eq-bar:nth-child(1) { animation-delay: 0.1s; }
@@ -157,6 +168,32 @@
         </div>
       </div>
 
+      let mediaRecorder, audioChunks = [];
+
+async function startLiveMicrophone() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+    mediaRecorder.onstop = () => {
+      const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+      alert("ድምጺ ብተዓወተ መገዲ ተቐዲሑ ኣሎ!");
+    };
+    mediaRecorder.start();
+    setTimeout(() => mediaRecorder.stop(), 5000); // Record for 5 seconds
+  } catch (err) {
+    alert("ማይክሮፎን ክኽፈት ኣይከኣለን!");
+  }
+}
+      // Continuous Telemetry Sensor Simulator
+setInterval(() => {
+  const randomTemp = (31 + Math.random() * 0.8).toFixed(1);
+  const randomHum = (60 + Math.random() * 2).toFixed(1);
+  
+  // Dynamic UI elements update
+  document.getElementById('liveTempDisplay').innerText = `${randomTemp} °C`;
+  document.getElementById('liveHumDisplay').innerText = `${randomHum} %`;
+}, 3000);
       <!-- Language Selector Module -->
       <div class="px-5 py-3.5 border-b border-slate-800/60 bg-slate-950/40">
         <label class="block text-[11px] font-medium text-slate-400 mb-1.5" id="lbl-lang">🌐 ቋንቋ ምረጽ / Language</label>
