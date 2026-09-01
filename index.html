@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartPoultry AI Enterprise Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-xl">🐔</div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight">SmartPoultry <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30">AI Enterprise</span></h1>
+          <p class="text-xs text-slate-400">Real-time Flock Health & Telemetry Platform</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Backend Connected
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Grid -->
+  <main class="max-w-7xl mx-auto px-4 py-8 space-y-8">
+
+    <!-- Top Stats Row -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5">
+        <div class="text-xs text-slate-400 font-medium">Brooding House Temp</div>
+        <div class="text-3xl font-extrabold text-amber-400 mt-2" id="temp-val">31.8 °C</div>
+        <div class="text-xs text-emerald-400 mt-1">✓ Optimal Range (30-33°C)</div>
+      </div>
+      <div class="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5">
+        <div class="text-xs text-slate-400 font-medium">Relative Humidity</div>
+        <div class="text-3xl font-extrabold text-cyan-400 mt-2" id="humidity-val">62 %</div>
+        <div class="text-xs text-slate-400 mt-1">Target: 60-65%</div>
+      </div>
+      <div class="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5">
+        <div class="text-xs text-slate-400 font-medium">Ammonia Level</div>
+        <div class="text-3xl font-extrabold text-emerald-400 mt-2" id="ammonia-val">11 ppm</div>
+        <div class="text-xs text-emerald-400 mt-1">✓ Safe (< 20 ppm)</div>
+      </div>
+      <div class="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5">
+        <div class="text-xs text-slate-400 font-medium">Feed Conversion Ratio (FCR)</div>
+        <div class="text-3xl font-extrabold text-indigo-400 mt-2">1.60</div>
+        <div class="text-xs text-indigo-400 mt-1">High Efficiency Batch</div>
+      </div>
+    </div>
+
+    <!-- AI Diagnostics Modules -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Module 1: Computer Vision Disease Detection -->
+      <div class="bg-slate-800/40 border border-slate-700/60 rounded-2xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-semibold text-slate-200 flex items-center gap-2">📸 Image Vision Diagnosis</h3>
+            <span class="text-xs text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">YOLOv8 AI</span>
+          </div>
+          <p class="text-xs text-slate-400 mb-4">Upload flock or droppings image to detect Coccidiosis, Newcastle, or Salmonella.</p>
+          <input type="file" id="vision-file" class="text-xs text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-500/20 file:text-emerald-300 hover:file:bg-emerald-500/30 cursor-pointer w-full mb-4">
+        </div>
+        <button onclick="runVisionDiagnosis()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm py-2.5 rounded-xl transition">Run Image Analysis</button>
+        <div id="vision-result" class="hidden mt-4 p-3 bg-slate-900/80 rounded-xl border border-slate-700 text-xs space-y-1"></div>
+      </div>
+
+      <!-- Module 2: Audio Diagnostic AI -->
+      <div class="bg-slate-800/40 border border-slate-700/60 rounded-2xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-semibold text-slate-200 flex items-center gap-2">🎙️ Acoustic Respiratory AI</h3>
+            <span class="text-xs text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded">Audio Spectrogram</span>
+          </div>
+          <p class="text-xs text-slate-400 mb-4">Record or upload barn audio to detect coughing/wheezing respiratory distress.</p>
+          <input type="file" id="audio-file" class="text-xs text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-cyan-500/20 file:text-cyan-300 hover:file:bg-cyan-500/30 cursor-pointer w-full mb-4">
+        </div>
+        <button onclick="runAudioDiagnosis()" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-medium text-sm py-2.5 rounded-xl transition">Analyze Audio Signature</button>
+        <div id="audio-result" class="hidden mt-4 p-3 bg-slate-900/80 rounded-xl border border-slate-700 text-xs space-y-1"></div>
+      </div>
+
+      <!-- Module 3: Vision Weight Estimator -->
+      <div class="bg-slate-800/40 border border-slate-700/60 rounded-2xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-semibold text-slate-200 flex items-center gap-2">⚖️ Camera Weight Estimator</h3>
+            <span class="text-xs text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded">Pixel Density</span>
+          </div>
+          <p class="text-xs text-slate-400 mb-4">Estimate average flock bird weight without physical scale handling.</p>
+          <input type="file" id="weight-file" class="text-xs text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-500/20 file:text-indigo-300 hover:file:bg-indigo-500/30 cursor-pointer w-full mb-4">
+        </div>
+        <button onclick="runWeightEstimation()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm py-2.5 rounded-xl transition">Estimate Weight</button>
+        <div id="weight-result" class="hidden mt-4 p-3 bg-slate-900/80 rounded-xl border border-slate-700 text-xs space-y-1"></div>
+      </div>
+
+    </div>
+
+    <!-- Live Telemetry Graph Section -->
+    <div class="bg-slate-800/40 border border-slate-700/60 rounded-2xl p-6">
+      <h3 class="font-semibold text-slate-200 mb-2">📊 Live Brooding Telemetry Stream</h3>
+      <p class="text-xs text-slate-400 mb-6">Real-time IoT climate synchronization feed.</p>
+      <div class="h-64">
+        <canvas id="telemetryChart"></canvas>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Live Telemetry Chart Setup
+    const ctx = document.getElementById('telemetryChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['12:00', '12:05', '12:10', '12:15', '12:20', '12:25'],
+        datasets: [
+          { label: 'Temperature (°C)', data: [31.2, 31.5, 31.8, 31.4, 31.9, 31.8], borderColor: '#fbbf24', tension: 0.4 },
+          { label: 'Humidity (%)', data: [60, 61, 62, 63, 61, 62], borderColor: '#22d3ee', tension: 0.4 },
+          { label: 'Ammonia (ppm)', data: [10, 11, 11, 12, 10, 11], borderColor: '#34d399', tension: 0.4 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { labels: { color: '#94a3b8' } } },
+        scales: {
+          x: { ticks: { color: '#64748b' }, grid: { color: '#1e293b' } },
+          y: { ticks: { color: '#64748b' }, grid: { color: '#1e293b' } }
+        }
+      }
+    });
+
+    // Simulated Frontend Diagnostics Logic
+    function runVisionDiagnosis() {
+      const resDiv = document.getElementById('vision-result');
+      resDiv.classList.remove('hidden');
+      resDiv.innerHTML = `
+        <div class="text-emerald-400 font-bold">Analysis Complete</div>
+        <div>Detected: <span class="font-semibold text-white">Coccidiosis (94% Confidence)</span></div>
+        <div class="text-slate-400">Severity: High</div>
+        <div class="text-slate-300 mt-1">Action: Administer Amprolium in water for 5 days. Isolate flock.</div>
+      `;
+    }
+
+    function runAudioDiagnosis() {
+      const resDiv = document.getElementById('audio-result');
+      resDiv.classList.remove('hidden');
+      resDiv.innerHTML = `
+        <div class="text-cyan-400 font-bold">Acoustic Analysis Complete</div>
+        <div>Condition: <span class="font-semibold text-white">Normal Respiratory Sound (96%)</span></div>
+        <div class="text-emerald-400 mt-1">✓ No cough or bronchitis frequencies detected.</div>
+      `;
+    }
+
+    function runWeightEstimation() {
+      const resDiv = document.getElementById('weight-result');
+      resDiv.classList.remove('hidden');
+      resDiv.innerHTML = `
+        <div class="text-indigo-400 font-bold">Weight Analysis Complete</div>
+        <div>Estimated Weight: <span class="text-lg font-bold text-white">2.35 kg</span></div>
+        <div class="text-emerald-400 mt-1">✓ Market Readiness: Ready for Sale</div>
+      `;
+    }
+  </script>
+</body>
+</html>
