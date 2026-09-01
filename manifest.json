@@ -1,0 +1,50 @@
+{
+  "name": "SmartPoultry AI Enterprise Suite v3.0",
+  "short_name": "SmartPoultry",
+  "description": "Autonomous AI Poultry Diagnostics & Real-time Brooding Telemetry Suite",
+  "start_url": "./index.html",
+  "id": "/smartpoultry/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "background_color": "#020617",
+  "theme_color": "#022c22",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "Open Main Telemetry Dashboard",
+      "url": "./index.html#dash",
+      "icons": [{ "src": "icons/icon.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Diagnostic History",
+      "short_name": "History",
+      "description": "View Diagnostic Logs & Export Reports",
+      "url": "./index.html#history",
+      "icons": [{ "src": "icons/icon.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Calendar Scheduler",
+      "short_name": "Calendar",
+      "description": "Vaccination & Batch Calendar",
+      "url": "./index.html#calendar",
+      "icons": [{ "src": "icons/icon.svg", "sizes": "192x192" }]
+    }
+  ],
+  "categories": ["productivity", "utilities", "business"]
+}
